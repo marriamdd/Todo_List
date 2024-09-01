@@ -1,3 +1,3 @@
 export default function MyDayPage() {
-  return <div>MyDayPage</div>;
+  return <div className="text-red-400">MyDayPage</div>;
 }
