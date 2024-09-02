@@ -5,6 +5,7 @@ import MyDayPage from "./pages/MyDayPage";
 import ImportantPage from "./pages/ImportantsPage";
 import SingInPage from "./pages/SingInPage";
 import Layout from "./layouts/Layout";
+import DeashBoardPage from "./pages/DeashBoardPage";
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route path="/MyDay" element={<MyDayPage />} />
             <Route path="/Important" element={<ImportantPage />} />
+            <Route path="/DeashBoard" element={<DeashBoardPage />} />
           </Route>
         </Routes>
       </Router>

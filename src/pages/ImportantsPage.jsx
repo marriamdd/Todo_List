@@ -1,3 +1,9 @@
+import AddTask from "../components/AddTask";
 export default function ImportantPage() {
-  return <div>ImportantsPage</div>;
+  return (
+    <div>
+      <AddTask />
+      ImportantsPage
+    </div>
+  );
 }

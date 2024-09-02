@@ -9,8 +9,11 @@ export default function SideBar() {
   useEffect(() => {
     if (location.pathname === "/MyDay") {
       setCurrentEndPoint("MyDay");
-    } else if (location.pathname === "/Important") {
+    }
+    if (location.pathname === "/Important") {
       setCurrentEndPoint("Important");
+    } else if (location.pathname === "/DeashBoard") {
+      setCurrentEndPoint("DeashBoard");
     }
   }, [location.pathname, setCurrentEndPoint]);
 
@@ -37,6 +40,22 @@ export default function SideBar() {
           <img src="/assets/modal_icons/ph_star-thin.svg" alt="Important" />
           <span className="text-textColor text-[1.4rem] font-[400]">
             Important
+          </span>
+        </div>
+      </Link>
+      <Link to="/DeashBoard">
+        <div
+          className={`flex items-center gap-[1.2rem] rounded-[0.4rem] px-[1rem] py-[1.6rem] w-[25.2rem] h-[4.8rem] ${
+            currentEndPoint === "DeashBoard" ? "bg-[#E7E8EA]" : ""
+          }`}
+        >
+          <img
+            className="w-[22px] h-[22px]"
+            src="/assets/modal_icons/analytics_777502.png"
+            alt="DeashBoard"
+          />
+          <span className="text-textColor text-[1.4rem] font-[400]">
+            DeashBoard
           </span>
         </div>
       </Link>
