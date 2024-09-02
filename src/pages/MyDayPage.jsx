@@ -1,3 +1,12 @@
+import AddTask from "../components/AddTask";
+import TaskCard from "../components/TaskCard";
+
 export default function MyDayPage() {
-  return <div className="text-red-400">MyDayPage</div>;
+  return (
+    <div className="">
+      MyDayPage
+      <AddTask />
+      <TaskCard />
+    </div>
+  );
 }

@@ -10,6 +10,9 @@ export default {
         textColor: "#252931",
         greyBorder: "#C7CAD0",
       },
+      boxShadow: {
+        custom: "0px 1px 8px 0px rgba(0, 0, 0, 0.25)",
+      },
     },
   },
   plugins: [],
