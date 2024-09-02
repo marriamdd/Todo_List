@@ -8,6 +8,7 @@ export default {
       },
       colors: {
         textColor: "#252931",
+        greyBorder: "#C7CAD0",
       },
     },
   },
