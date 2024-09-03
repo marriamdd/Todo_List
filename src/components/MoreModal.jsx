@@ -3,7 +3,13 @@ import { MyContext } from "../contextApi/Context";
 import PropTypes from "prop-types";
 import { supabase } from "../config/supabaseClient";
 export default function MoreModal({ taskId }) {
-  const { tasks, setTasks } = useContext(MyContext);
+  const {
+    tasks,
+    setTasks,
+    setEditDescription,
+    editDescription,
+    setShowMoreModal,
+  } = useContext(MyContext);
   const options = [
     {
       icon: "/assets/modal_icons/ph_star-thin.svg",
@@ -23,25 +29,35 @@ export default function MoreModal({ taskId }) {
     },
   ];
   const { showMoreModal } = useContext(MyContext);
+
   const handleOptionClick = async (option) => {
     switch (option) {
-      case "Delete": {
-        const deleted = tasks.filter((task) => task.id !== taskId);
+      case "Delete":
+        {
+          const deleted = tasks.filter((task) => task.id !== taskId);
 
-        setTasks(deleted);
-        const { data, error } = await supabase
-          .from("todos")
-          .delete()
-          .eq("id", taskId, "user_id", "999");
-        if (error) {
-          console.log(error.message);
+          setTasks(deleted);
+          const { data, error } = await supabase
+            .from("todos")
+            .delete()
+            .eq("id", taskId, "user_id", "999");
+          if (error) {
+            console.log(error.message);
+          }
+          if (data) {
+            console.log(data);
+          }
         }
-        if (data) {
-          console.log(data);
-        }
+        break;
+      case "Edit": {
+        setShowMoreModal(() => ({ taskId: null }));
+        setEditDescription(() => ({
+          editId: taskId,
+        }));
       }
     }
   };
+  console.log(editDescription);
   return (
     <>
       {showMoreModal && (

@@ -1,14 +1,23 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../contextApi/Context";
 import MoreModal from "./MoreModal";
 import PropTypes from "prop-types";
 import { useClickOutsideEffect } from "../customHooks/useClickOutsideEffect";
 import { useResizeEffect } from "../customHooks/useResizeEffect";
 import { format } from "date-fns";
-export default function TaskCard({ task }) {
-  const { showMoreModal, setShowMoreModal, isDesktop } = useContext(MyContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+import { useRef } from "react";
+import { supabase } from "../config/supabaseClient";
 
+export default function TaskCard({ task }) {
+  const {
+    showMoreModal,
+    setShowMoreModal,
+    isDesktop,
+    editDescription,
+    setEditDescription,
+  } = useContext(MyContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const textareaRef = useRef(null);
   const modalRef = useClickOutsideEffect(isModalOpen, () =>
     setIsModalOpen(false)
   );
@@ -25,9 +34,36 @@ export default function TaskCard({ task }) {
   console.log(task.created_at);
   const dateStr = task.created_at;
   const date = new Date(dateStr);
+  let OldDescription = task.description;
+  const [updatedDescription, setUpdatedDescription] = useState(OldDescription);
 
   const formattedDate = format(date, "dd/MM/yy");
-
+  const handleChangeDescription = (e) => {
+    console.log(e);
+    setUpdatedDescription(e);
+  };
+  const handleEndEditing = async (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      setEditDescription(() => ({ editId: null }));
+      const { data, error } = await supabase
+        .from("todos")
+        .update({ description: updatedDescription })
+        .eq("id", task.id, "user_id", "999");
+      if (data) {
+        console.log(data);
+      }
+      if (error) {
+        console.log(error.message);
+      }
+    }
+  };
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [updatedDescription]);
+  console.log(editDescription.editId);
   return (
     <div className="xl:w-[25.2rem] relative rounded-[1rem] w-[34.3rem] h-[100%] pt-[1.2rem] mb-[1rem] px-[1.6rem] bg-[red]">
       <div className="flex justify-between items-center">
@@ -66,9 +102,21 @@ export default function TaskCard({ task }) {
           )}
       </div>
 
-      <p className="pb-[2.6rem] pt-[1.6rem] text-textColor text-[1.4rem] font-[400] leading-[20px]">
-        {task.description}
-      </p>
+      {editDescription.editId == task.id ? (
+        <textarea
+          ref={textareaRef}
+          className="w-[30rem] mt-[1rem]  xl:w-[50rem] bg-transparent shadow-custom rounded-[0.8rem] px-[1rem] py-[1.4rem] gap-[1rem] resize-none overflow-hidden"
+          onKeyDown={handleEndEditing}
+          rows={1}
+          onChange={(e) => handleChangeDescription(e.target.value)}
+          value={updatedDescription}
+        ></textarea>
+      ) : (
+        <p className="pb-[2.6rem] pt-[1.6rem] text-textColor text-[1.4rem] font-[400] leading-[20px]">
+          {updatedDescription}
+        </p>
+      )}
+
       <div className="w-full flex hover:opacity-[1] justify-end pb-[1.4rem]">
         <img
           onClick={() => handleMoreClick("bottom")}

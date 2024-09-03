@@ -12,6 +12,8 @@ const defaultContextValue = {
   setIsDesktop: () => {},
   tasks: [],
   setTasks: () => {},
+  editDescription: { editId: null },
+  setEditDescription: () => {},
 };
 
 export const MyContext = createContext(defaultContextValue);
@@ -19,6 +21,9 @@ export const MyContext = createContext(defaultContextValue);
 export const MyProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
   const [currentEndPoint, setCurrentEndPoint] = useState("MyDay");
+  const [editDescription, setEditDescription] = useState({
+    editId: null,
+  });
   const [showMoreModal, setShowMoreModal] = useState({
     taskId: number | null,
     position: null,
@@ -35,6 +40,8 @@ export const MyProvider = ({ children }) => {
         setShowMoreModal,
         isDesktop,
         setIsDesktop,
+        editDescription,
+        setEditDescription,
       }}
     >
       {children}
