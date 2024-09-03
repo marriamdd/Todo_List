@@ -17,8 +17,8 @@ export default function AddTask() {
         .from("todos")
         .insert([
           {
-            // user_id: "999",
-            description: "ლლლ",
+            user_id: "999",
+            description: inputValue,
             complate: false,
             important: false,
           },

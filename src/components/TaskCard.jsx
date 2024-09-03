@@ -1,14 +1,15 @@
 import { useContext } from "react";
 import { MyContext } from "../contextApi/Context";
 import MoreModal from "./MoreModal";
+import PropTypes from "prop-types";
 import { useClickOutsideEffect } from "../customHooks/useClickOutsideEffect";
 import { useResizeEffect } from "../customHooks/useResizeEffect";
-export default function TaskCard() {
+export default function TaskCard({ task }) {
   const { setShowMoreModal, showMoreModal } = useContext(MyContext);
 
   const modalRef = useClickOutsideEffect(showMoreModal, setShowMoreModal);
   useResizeEffect(showMoreModal, setShowMoreModal);
-
+  console.log("task", task);
   return (
     <div className="xl:w-[25.2rem] relative rounded-[1rem] w-[34.3rem] h-[100%] pt-[1.2rem] px-[1.6rem]  bg-[red]">
       <div className="flex justify-between items-center">
@@ -18,6 +19,7 @@ export default function TaskCard() {
             src="/assets/task_icons/material-symbols-light_date-range-outline.svg"
             alt="date"
           />
+
           <span className="text-[1.4rem] font-[400] text-textColor leading-[2rem]">
             4/03/2024
           </span>
@@ -47,10 +49,7 @@ export default function TaskCard() {
       </div>
 
       <p className="pb-[2.6rem] pt-[1.6rem] text-textColor text-[1.4rem] font-[400] leading-[20px]">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-        laboriosam inventore repellendus sunt pariatur nesciunt repudiandae
-        aliquam ipsam ullam, ea dolore voluptatibus sed, minus veniam dolores
-        consectetur quis eos. Sed.
+        {task.description}
       </p>
       <div
         className={`w-full  flex  hover:opacity-[1] justify-end pb-[1.4rem]
@@ -80,3 +79,8 @@ export default function TaskCard() {
     </div>
   );
 }
+TaskCard.propTypes = {
+  task: PropTypes.shape({
+    description: PropTypes.string.isRequired,
+  }).isRequired,
+};

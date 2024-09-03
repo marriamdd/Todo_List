@@ -6,9 +6,13 @@ import ImportantPage from "./pages/ImportantsPage";
 import SingInPage from "./pages/SingInPage";
 import Layout from "./layouts/Layout";
 import DeashBoardPage from "./pages/DeashBoardPage";
+import { QueryClient, QueryClientProvider } from "react-query";
+
 function App() {
+  const queryClient = new QueryClient();
+
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
           <Route path="/" element={<SingInPage />} />
@@ -19,7 +23,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
-    </>
+    </QueryClientProvider>
   );
 }
 
