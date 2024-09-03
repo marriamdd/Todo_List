@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-export default function AddTask({ addTask, setTasks }) {
+import { MyContext } from "../contextApi/Context";
+export default function AddTask({ addTask }) {
   const [openInput, setOpenInput] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const textareaRef = useRef(null);
-
+  const { setTasks } = useContext(MyContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (inputValue) {

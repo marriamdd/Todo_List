@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
 import AddTask from "../components/AddTask";
 import { supabase } from "../config/supabaseClient";
 import TaskCard from "../components/TaskCard";
+import { MyContext } from "../contextApi/Context";
 export default function MyDayPage() {
-  const [tasks, setTasks] = useState([]);
-
+  const { tasks, setTasks } = useContext(MyContext);
   useEffect(() => {
     const fetchTasks = async () => {
       const { data, error } = await supabase

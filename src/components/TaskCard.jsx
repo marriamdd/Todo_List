@@ -29,7 +29,7 @@ export default function TaskCard({ task }) {
   const formattedDate = format(date, "dd/MM/yy");
 
   return (
-    <div className="xl:w-[25.2rem] relative rounded-[1rem] w-[34.3rem] h-[100%] pt-[1.2rem] px-[1.6rem] bg-[red]">
+    <div className="xl:w-[25.2rem] relative rounded-[1rem] w-[34.3rem] h-[100%] pt-[1.2rem] mb-[1rem] px-[1.6rem] bg-[red]">
       <div className="flex justify-between items-center">
         <div className="bg-[#FDF8F2] w-[12.6rem] h-[3rem] rounded-[3rem] flex justify-center gap-[0.5rem] items-center">
           <img
@@ -87,7 +87,7 @@ export default function TaskCard({ task }) {
         showMoreModal.position === "bottom" &&
         isModalOpen && (
           <div ref={modalRef}>
-            <MoreModal />
+            <MoreModal taskId={task.id} />
           </div>
         )}
     </div>

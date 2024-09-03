@@ -1,7 +1,9 @@
 import { useContext } from "react";
 import { MyContext } from "../contextApi/Context";
-
-export default function MoreModal() {
+import PropTypes from "prop-types";
+import { supabase } from "../config/supabaseClient";
+export default function MoreModal({ taskId }) {
+  const { tasks, setTasks } = useContext(MyContext);
   const options = [
     {
       icon: "/assets/modal_icons/ph_star-thin.svg",
@@ -21,7 +23,25 @@ export default function MoreModal() {
     },
   ];
   const { showMoreModal } = useContext(MyContext);
+  const handleOptionClick = async (option) => {
+    switch (option) {
+      case "Delete": {
+        const deleted = tasks.filter((task) => task.id !== taskId);
 
+        setTasks(deleted);
+        const { data, error } = await supabase
+          .from("todos")
+          .delete()
+          .eq("id", taskId, "user_id", "999");
+        if (error) {
+          console.log(error.message);
+        }
+        if (data) {
+          console.log(data);
+        }
+      }
+    }
+  };
   return (
     <>
       {showMoreModal && (
@@ -46,7 +66,9 @@ export default function MoreModal() {
               } `}
             >
               <img src={option.icon} alt={`${option.name}_icon`} />
-              <span>{option.name}</span>
+              <span onClick={() => handleOptionClick(option.name)}>
+                {option.name}
+              </span>
             </div>
           ))}
         </div>
@@ -54,3 +76,6 @@ export default function MoreModal() {
     </>
   );
 }
+MoreModal.propTypes = {
+  taskId: PropTypes.number.isRequired,
+};

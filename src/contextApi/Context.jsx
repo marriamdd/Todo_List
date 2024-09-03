@@ -10,11 +10,14 @@ const defaultContextValue = {
   setShowMoreModal: () => {},
   isDesktop: Boolean,
   setIsDesktop: () => {},
+  tasks: [],
+  setTasks: () => {},
 };
 
 export const MyContext = createContext(defaultContextValue);
 
 export const MyProvider = ({ children }) => {
+  const [tasks, setTasks] = useState([]);
   const [currentEndPoint, setCurrentEndPoint] = useState("MyDay");
   const [showMoreModal, setShowMoreModal] = useState({
     taskId: number | null,
@@ -24,6 +27,8 @@ export const MyProvider = ({ children }) => {
   return (
     <MyContext.Provider
       value={{
+        tasks,
+        setTasks,
         currentEndPoint,
         setCurrentEndPoint,
         showMoreModal,
