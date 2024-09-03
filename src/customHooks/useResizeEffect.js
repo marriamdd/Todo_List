@@ -1,13 +1,11 @@
 import { useContext, useEffect } from "react";
 import { MyContext } from "../contextApi/Context";
 
-export function useResizeEffect(showMoreModal, setShowMoreModal) {
-  const { isDesktop } = useContext(MyContext);
+export function useResizeEffect() {
+  const { isDesktop, setIsDesktop } = useContext(MyContext);
   useEffect(() => {
     function handleResize() {
-      if (isDesktop && showMoreModal.position === "top") {
-        setShowMoreModal({ ...showMoreModal, position: null });
-      }
+      setIsDesktop(window.innerWidth >= 1280);
     }
 
     handleResize();
@@ -15,5 +13,5 @@ export function useResizeEffect(showMoreModal, setShowMoreModal) {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [showMoreModal, setShowMoreModal]);
+  }, [isDesktop, setIsDesktop]);
 }

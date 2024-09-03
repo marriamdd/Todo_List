@@ -25,10 +25,11 @@ export const MyProvider = ({ children }) => {
     editId: null,
   });
   const [showMoreModal, setShowMoreModal] = useState({
-    taskId: number | null,
+    taskId: null,
     position: null,
   });
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1440);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1280);
+
   return (
     <MyContext.Provider
       value={{
