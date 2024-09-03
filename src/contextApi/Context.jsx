@@ -1,13 +1,15 @@
 import { createContext, useState } from "react";
-import PropTypes from "prop-types";
+import PropTypes, { number } from "prop-types";
 const defaultContextValue = {
   currentEndPoint: "",
   setCurrentEndPoint: () => {},
   showMoreModal: {
-    visible: false,
+    taskId: number | null,
     position: null,
   },
   setShowMoreModal: () => {},
+  isDesktop: Boolean,
+  setIsDesktop: () => {},
 };
 
 export const MyContext = createContext(defaultContextValue);
@@ -15,10 +17,10 @@ export const MyContext = createContext(defaultContextValue);
 export const MyProvider = ({ children }) => {
   const [currentEndPoint, setCurrentEndPoint] = useState("MyDay");
   const [showMoreModal, setShowMoreModal] = useState({
-    visible: false,
+    taskId: number | null,
     position: null,
   });
-
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1440);
   return (
     <MyContext.Provider
       value={{
@@ -26,6 +28,8 @@ export const MyProvider = ({ children }) => {
         setCurrentEndPoint,
         showMoreModal,
         setShowMoreModal,
+        isDesktop,
+        setIsDesktop,
       }}
     >
       {children}

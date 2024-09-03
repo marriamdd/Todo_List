@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { MyContext } from "../contextApi/Context";
 
 export function useResizeEffect(showMoreModal, setShowMoreModal) {
+  const { isDesktop } = useContext(MyContext);
   useEffect(() => {
     function handleResize() {
-      if (window.innerWidth < 1440 && showMoreModal.position === "top") {
+      if (isDesktop && showMoreModal.position === "top") {
         setShowMoreModal({ ...showMoreModal, position: null });
       }
     }
