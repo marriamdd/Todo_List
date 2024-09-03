@@ -18,6 +18,7 @@ export default function Header() {
           src="/assets/header_icons/Vector (1).svg"
           alt="search"
         />
+
         <div className="bg-[#82868F] h-[1.6rem] w-[1px] flex xl:hidden"></div>
         <div className="relative hidden xl:flex">
           <input
@@ -31,11 +32,21 @@ export default function Header() {
             alt="search"
           />
         </div>
-        <img
-          className="w-[13.801px] h-[18.114px]"
-          src="/assets/header_icons/Vector (2).svg"
-          alt="user"
-        />
+        <div className="flex gap-[1.2rem] items-center">
+          <div className="xl:flex hidden gap-[0.4rem] items-center">
+            <span className="text-[1.4rem] font-[500]">EN</span>
+            <img
+              className="w-[22px] h-[22px]"
+              src="/assets/header_icons/material-symbols-light_navigate-next.svg"
+              alt="arrow"
+            />
+          </div>
+          <img
+            className="w-[13.801px] h-[18.114px]"
+            src="/assets/header_icons/Vector (2).svg"
+            alt="user"
+          />
+        </div>
       </div>
     </div>
   );
