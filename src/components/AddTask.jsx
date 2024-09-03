@@ -1,35 +1,28 @@
-import { supabase } from "../config/supabaseClient";
 import { useState, useRef, useEffect } from "react";
-
-export default function AddTask() {
+import PropTypes from "prop-types";
+export default function AddTask({ addTask, setTasks }) {
   const [openInput, setOpenInput] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const textareaRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("input", inputValue);
-    setOpenInput(false);
-    setInputValue("");
     if (inputValue) {
-      console.log("filled");
-      const { data, error } = await supabase
-        .from("todos")
-        .insert([
-          {
-            user_id: "999",
-            description: inputValue,
-            complate: false,
-            important: false,
-          },
-        ])
-        .select();
-      if (error) {
-        console.log(error);
+      const newTask = {
+        user_id: "999",
+        description: inputValue,
+        complate: false,
+        important: false,
+      };
+
+      const addedTask = await addTask(newTask);
+
+      if (addedTask) {
+        setTasks((prevTasks) => [...prevTasks, addedTask]);
       }
-      if (data) {
-        console.log(data);
-      }
+
+      setOpenInput(false);
+      setInputValue("");
     }
   };
 
@@ -39,6 +32,7 @@ export default function AddTask() {
       handleSubmit(e);
     }
   };
+
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
@@ -78,3 +72,7 @@ export default function AddTask() {
     </div>
   );
 }
+AddTask.propTypes = {
+  addTask: PropTypes.func.isRequired,
+  setTasks: PropTypes.func.isRequired,
+};

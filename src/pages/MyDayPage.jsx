@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../config/supabaseClient";
 import AddTask from "../components/AddTask";
+import { supabase } from "../config/supabaseClient";
 import TaskCard from "../components/TaskCard";
-
 export default function MyDayPage() {
   const [tasks, setTasks] = useState([]);
 
@@ -10,35 +9,30 @@ export default function MyDayPage() {
     const fetchTasks = async () => {
       const { data, error } = await supabase
         .from("todos")
-        .select()
+        .select("*")
         .eq("user_id", "999");
-
-      if (error) {
-        console.log(error);
-      } else {
-        setTasks(data);
-      }
+      if (error) console.error("Error fetching tasks:", error);
+      else setTasks(data);
     };
-
     fetchTasks();
   }, []);
 
-  const addTask = async (newTask) => {
+  const addTask = async (task) => {
     const { data, error } = await supabase
       .from("todos")
-      .insert([newTask])
-      .select();
-
+      .insert([task])
+      .select()
+      .single();
     if (error) {
-      console.log(error);
-    } else {
-      setTasks((prevTasks) => [...prevTasks, ...data]);
+      console.error("error adding task:", error);
+      return null;
     }
+    return data;
   };
 
   return (
     <div>
-      <AddTask addTask={addTask} />
+      <AddTask addTask={addTask} setTasks={setTasks} />
       {tasks.map((task) => (
         <TaskCard key={task.id} task={task} />
       ))}
