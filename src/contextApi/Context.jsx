@@ -1,9 +1,10 @@
 import { createContext, useState } from "react";
 import PropTypes from "prop-types";
+import { useUser } from "@clerk/clerk-react";
+
 const defaultContextValue = {
   currentEndPoint: "",
   setCurrentEndPoint: () => {},
-
   isDesktop: Boolean,
   setIsDesktop: () => {},
   tasks: [],
@@ -13,7 +14,7 @@ const defaultContextValue = {
   user: null,
   isLoaded: false,
 };
-import { useUser } from "@clerk/clerk-react";
+
 export const MyContext = createContext(defaultContextValue);
 
 export const MyProvider = ({ children }) => {
@@ -22,9 +23,9 @@ export const MyProvider = ({ children }) => {
   const [editDescription, setEditDescription] = useState({
     editId: null,
   });
-
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1280);
   const { user, isLoaded } = useUser();
+
   return (
     <MyContext.Provider
       value={{
@@ -44,6 +45,7 @@ export const MyProvider = ({ children }) => {
     </MyContext.Provider>
   );
 };
+
 MyProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
