@@ -81,3 +81,17 @@
     @apply bg-background text-foreground;
   }
 }
+/* .cl-rootBox {
+  background-color: red !important;
+  width: 100% !important
+
+  ;
+  height: 100vh;
+  .cl-cardBox {
+    width: 100%;
+  }
+  .cl-card {
+    width: 100%;
+    max-width: 100%;
+  }
+} */

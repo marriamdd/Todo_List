@@ -6,13 +6,13 @@ export default function AddTask({ addTask }) {
   const [openInput, setOpenInput] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const textareaRef = useRef(null);
-  const { setTasks } = useContext(MyContext);
+  const { setTasks, user } = useContext(MyContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (inputValue) {
       const newTask = {
-        user_id: "999",
+        user_id: user.id,
         description: inputValue,
         complate: false,
         important: false,

@@ -1,3 +1,4 @@
+import { SignedIn, UserButton } from "@clerk/clerk-react";
 export default function Header() {
   return (
     <div className="bg-[rgb(246,246,247)] flex items-center px-[1.6rem] xl:px-[3rem] py-[0.8rem] xl:py-[1.4rem] justify-between border-b-[1px] border-b-greyBorder">
@@ -41,11 +42,19 @@ export default function Header() {
               alt="arrow"
             />
           </div>
-          <img
-            className="w-[13.801px] h-[18.114px]"
-            src="/assets/header_icons/Vector (2).svg"
-            alt="user"
-          />
+
+          <SignedIn>
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: {
+                    width: "25px",
+                    height: "25px",
+                  },
+                },
+              }}
+            />
+          </SignedIn>
         </div>
       </div>
     </div>

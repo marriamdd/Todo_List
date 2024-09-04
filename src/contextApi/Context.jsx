@@ -10,8 +10,10 @@ const defaultContextValue = {
   setTasks: () => {},
   editDescription: { editId: null },
   setEditDescription: () => {},
+  user: null,
+  isLoaded: false,
 };
-
+import { useUser } from "@clerk/clerk-react";
 export const MyContext = createContext(defaultContextValue);
 
 export const MyProvider = ({ children }) => {
@@ -22,7 +24,7 @@ export const MyProvider = ({ children }) => {
   });
 
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1280);
-
+  const { user, isLoaded } = useUser();
   return (
     <MyContext.Provider
       value={{
@@ -30,7 +32,8 @@ export const MyProvider = ({ children }) => {
         setTasks,
         currentEndPoint,
         setCurrentEndPoint,
-
+        user,
+        isLoaded,
         isDesktop,
         setIsDesktop,
         editDescription,

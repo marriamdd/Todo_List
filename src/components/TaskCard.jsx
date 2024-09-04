@@ -11,7 +11,7 @@ import chroma from "chroma-js";
 
 import { HoverMoreModal } from "./HoverMoreModal";
 export default function TaskCard({ task }) {
-  const { isDesktop, editDescription, setEditDescription } =
+  const { isDesktop, editDescription, setEditDescription, user } =
     useContext(MyContext);
 
   const textareaRef = useRef(null);
@@ -33,7 +33,7 @@ export default function TaskCard({ task }) {
       const { data, error } = await supabase
         .from("todos")
         .update({ description: updatedDescription })
-        .eq("id", task.id, "user_id", "999");
+        .eq("id", task.id, "user_id", user.id);
       if (data) {
         console.log(data);
       }

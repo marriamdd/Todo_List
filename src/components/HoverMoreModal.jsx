@@ -7,8 +7,10 @@ import PropTypes from "prop-types";
 import { useContext } from "react";
 import { MyContext } from "@/contextApi/Context";
 import { supabase } from "@/config/supabaseClient";
+import { handleImportant } from "@/customHooks/handleImportant";
+import { handleCompleted } from "@/customHooks/handleCompleted";
 export function HoverMoreModal({ taskId, complate, important }) {
-  const { tasks, setTasks, setEditDescription } = useContext(MyContext);
+  const { tasks, setTasks, setEditDescription, user } = useContext(MyContext);
   const options = [
     {
       icon: important
@@ -33,61 +35,6 @@ export function HoverMoreModal({ taskId, complate, important }) {
     },
   ];
 
-  const handleCompleted = async (taskId) => {
-    const taskToUpdate = tasks.find((task) => task.id === taskId);
-
-    if (taskToUpdate) {
-      const updatedTask = {
-        ...taskToUpdate,
-        complate: !taskToUpdate.complate,
-      };
-
-      setTasks((prevTasks) =>
-        prevTasks.map((task) => (task.id === taskId ? updatedTask : task))
-      );
-
-      const { data, error } = await supabase
-        .from("todos")
-        .update({ complate: updatedTask.complate })
-        .eq("id", taskId)
-        .eq("user_id", "999");
-      if (data) {
-        console.log(data);
-      }
-      if (error) {
-        console.log(error.message);
-      }
-    }
-    console.log(taskToUpdate);
-  };
-
-  const handleImportant = async (taskId) => {
-    const taskToUpdate = tasks.find((task) => task.id === taskId);
-
-    if (taskToUpdate) {
-      const updatedTask = {
-        ...taskToUpdate,
-        important: !taskToUpdate.important,
-      };
-
-      setTasks((prevTasks) =>
-        prevTasks.map((task) => (task.id === taskId ? updatedTask : task))
-      );
-
-      const { data, error } = await supabase
-        .from("todos")
-        .update({ important: updatedTask.important })
-        .eq("id", taskId)
-        .eq("user_id", "999");
-      if (data) {
-        console.log(data);
-      }
-      if (error) {
-        console.log(error.message);
-      }
-    }
-    console.log(taskToUpdate);
-  };
   const handleOptionClick = async (option) => {
     switch (option) {
       case "Delete":
@@ -99,7 +46,7 @@ export function HoverMoreModal({ taskId, complate, important }) {
             .from("todos")
             .delete()
             .eq("id", taskId)
-            .eq("user_id", "999");
+            .eq("user_id", user.id);
           if (error) {
             console.log(error.message);
           }
@@ -118,11 +65,11 @@ export function HoverMoreModal({ taskId, complate, important }) {
       case "Complete":
       case "Completed":
         {
-          handleCompleted(taskId);
+          handleCompleted(taskId, tasks, setTasks, user);
         }
         break;
       case "Importance": {
-        handleImportant(taskId);
+        handleImportant(taskId, tasks, setTasks, user);
         break;
       }
     }
