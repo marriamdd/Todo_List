@@ -18,6 +18,7 @@ export function useClickOutsideEffect(ref, onClose, isOpen) {
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
   }, [ref, isOpen, onClose]);
 }
