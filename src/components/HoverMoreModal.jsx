@@ -7,17 +7,14 @@ import PropTypes from "prop-types";
 import { useContext } from "react";
 import { MyContext } from "@/contextApi/Context";
 import { supabase } from "@/config/supabaseClient";
-export function HoverMoreModal({ taskId, complate }) {
-  const {
-    tasks,
-    setTasks,
-    setEditDescription,
-
-    // setShowMoreModal,
-  } = useContext(MyContext);
+export function HoverMoreModal({ taskId, complate, important }) {
+  const { tasks, setTasks, setEditDescription } = useContext(MyContext);
   const options = [
     {
-      icon: "/assets/modal_icons/ph_star-thin.svg",
+      icon: important
+        ? "public/assets/task_icons/icons8-star-48.png"
+        : "/assets/modal_icons/ph_star-thin.svg",
+
       name: "Importance",
     },
     {
@@ -63,6 +60,34 @@ export function HoverMoreModal({ taskId, complate }) {
     }
     console.log(taskToUpdate);
   };
+
+  const handleImportant = async (taskId) => {
+    const taskToUpdate = tasks.find((task) => task.id === taskId);
+
+    if (taskToUpdate) {
+      const updatedTask = {
+        ...taskToUpdate,
+        important: !taskToUpdate.important,
+      };
+
+      setTasks((prevTasks) =>
+        prevTasks.map((task) => (task.id === taskId ? updatedTask : task))
+      );
+
+      const { data, error } = await supabase
+        .from("todos")
+        .update({ important: updatedTask.important })
+        .eq("id", taskId)
+        .eq("user_id", "999");
+      if (data) {
+        console.log(data);
+      }
+      if (error) {
+        console.log(error.message);
+      }
+    }
+    console.log(taskToUpdate);
+  };
   const handleOptionClick = async (option) => {
     switch (option) {
       case "Delete":
@@ -91,8 +116,14 @@ export function HoverMoreModal({ taskId, complate }) {
         }
         break;
       case "Complete":
-      case "Completed": {
-        handleCompleted(taskId);
+      case "Completed":
+        {
+          handleCompleted(taskId);
+        }
+        break;
+      case "Importance": {
+        handleImportant(taskId);
+        break;
       }
     }
   };
@@ -130,4 +161,5 @@ export function HoverMoreModal({ taskId, complate }) {
 HoverMoreModal.propTypes = {
   taskId: PropTypes.number,
   complate: PropTypes.bool,
+  important: PropTypes.bool,
 };

@@ -1,4 +1,4 @@
-import SignInInputs from "../components/SignInInputs";
+import SignInInputs from "@/components/SignInInputs";
 import { Link } from "react-router-dom";
 import DesktopDesignCarts from "../components/DesktopDesignCarts";
 export default function SingInPage() {

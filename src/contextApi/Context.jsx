@@ -1,13 +1,9 @@
 import { createContext, useState } from "react";
-import PropTypes, { number } from "prop-types";
+import PropTypes from "prop-types";
 const defaultContextValue = {
   currentEndPoint: "",
   setCurrentEndPoint: () => {},
-  showMoreModal: {
-    taskId: number | null,
-    position: null,
-  },
-  setShowMoreModal: () => {},
+
   isDesktop: Boolean,
   setIsDesktop: () => {},
   tasks: [],
@@ -24,10 +20,7 @@ export const MyProvider = ({ children }) => {
   const [editDescription, setEditDescription] = useState({
     editId: null,
   });
-  const [showMoreModal, setShowMoreModal] = useState({
-    taskId: null,
-    position: null,
-  });
+
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1280);
 
   return (
@@ -37,8 +30,7 @@ export const MyProvider = ({ children }) => {
         setTasks,
         currentEndPoint,
         setCurrentEndPoint,
-        showMoreModal,
-        setShowMoreModal,
+
         isDesktop,
         setIsDesktop,
         editDescription,

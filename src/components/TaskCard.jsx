@@ -53,7 +53,7 @@ export default function TaskCard({ task }) {
   const pastelColor = chroma.hsl(hue, 0.7, 0.85).hex();
   const lightColorRef = useRef(pastelColor);
   console.log(editDescription.editId == task.id);
-  console.log(task.complate, "es");
+  console.log(task.important, "es");
   useResizeEffect();
   return (
     <div
@@ -73,7 +73,11 @@ export default function TaskCard({ task }) {
         </div>
         <div className="w-[12.6rem] flex justify-end">
           {isDesktop && (
-            <HoverMoreModal taskId={task.id} complate={task.complate} />
+            <HoverMoreModal
+              taskId={task.id}
+              complate={task.complate}
+              important={task.important}
+            />
           )}
         </div>
       </div>
@@ -94,7 +98,11 @@ export default function TaskCard({ task }) {
       )}
 
       <div className="w-full flex hover:opacity-[1] justify-end pb-[1.4rem]">
-        <HoverMoreModal taskId={task.id} complate={task.complate} />
+        <HoverMoreModal
+          taskId={task.id}
+          complate={task.complate}
+          important={task.important}
+        />
       </div>
     </div>
   );
@@ -105,6 +113,7 @@ TaskCard.propTypes = {
     description: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     created_at: PropTypes.string.isRequired,
-    complate: PropTypes.bool, // Fix: Change `PropTypes.boolean` to `PropTypes.bool`
+    complate: PropTypes.bool,
+    important: PropTypes.bool,
   }).isRequired,
 };
