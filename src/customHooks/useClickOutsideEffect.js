@@ -1,25 +1,23 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
-export function useClickOutsideEffect(isModalOpen, onCloseModal) {
-  const modalRef = useRef(null);
-
+export function useClickOutsideEffect(ref, onClose, isOpen) {
   useEffect(() => {
     function handleClickOutside(event) {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        onCloseModal();
+      if (ref.current && !ref.current.contains(event.target)) {
+        onClose();
       }
     }
 
-    if (isModalOpen) {
+    if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isModalOpen]);
-
-  return modalRef;
+  }, [ref, isOpen, onClose]);
 }

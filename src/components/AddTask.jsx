@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { MyContext } from "../contextApi/Context";
+import { useClickOutsideEffect } from "@/customHooks/useClickOutsideEffect";
 export default function AddTask({ addTask }) {
   const [openInput, setOpenInput] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const textareaRef = useRef(null);
   const { setTasks } = useContext(MyContext);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (inputValue) {
@@ -33,7 +35,7 @@ export default function AddTask({ addTask }) {
       handleSubmit(e);
     }
   };
-
+  useClickOutsideEffect(textareaRef, () => setOpenInput(false), openInput);
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
@@ -61,7 +63,7 @@ export default function AddTask({ addTask }) {
         <form onSubmit={handleSubmit}>
           <textarea
             ref={textareaRef}
-            className="w-[34.3rem] xl:w-[57rem] shadow-custom rounded-[0.8rem] px-[1rem] py-[1.4rem] gap-[1rem] resize-none overflow-hidden"
+            className="w-[34.3rem] text-[1.6rem] font-[400] text-textColor leading-[2.4rem] xl:w-[57rem] shadow-custom rounded-[0.8rem] px-[0.9rem] py-[1.4rem]  resize-none overflow-hidden"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Enter your task"

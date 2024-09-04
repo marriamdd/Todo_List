@@ -7,13 +7,13 @@ import PropTypes from "prop-types";
 import { useContext } from "react";
 import { MyContext } from "@/contextApi/Context";
 import { supabase } from "@/config/supabaseClient";
-export function HoverMoreModal({ taskId }) {
+export function HoverMoreModal({ taskId, complate }) {
   const {
     tasks,
     setTasks,
     setEditDescription,
 
-    setShowMoreModal,
+    // setShowMoreModal,
   } = useContext(MyContext);
   const options = [
     {
@@ -21,8 +21,10 @@ export function HoverMoreModal({ taskId }) {
       name: "Importance",
     },
     {
-      icon: "/assets/task_icons/eva_radio-button-off-outline.svg",
-      name: "Complete",
+      icon: complate
+        ? "/assets/task_icons/icons8-filled-circle-24.png"
+        : "/assets/task_icons/eva_radio-button-off-outline.svg",
+      name: complate ? "Completed" : "Complete",
     },
     {
       icon: "/assets/task_icons/iconamoon_edit-light.svg",
@@ -33,6 +35,34 @@ export function HoverMoreModal({ taskId }) {
       name: "Delete",
     },
   ];
+
+  const handleCompleted = async (taskId) => {
+    const taskToUpdate = tasks.find((task) => task.id === taskId);
+
+    if (taskToUpdate) {
+      const updatedTask = {
+        ...taskToUpdate,
+        complate: !taskToUpdate.complate,
+      };
+
+      setTasks((prevTasks) =>
+        prevTasks.map((task) => (task.id === taskId ? updatedTask : task))
+      );
+
+      const { data, error } = await supabase
+        .from("todos")
+        .update({ complate: updatedTask.complate })
+        .eq("id", taskId)
+        .eq("user_id", "999");
+      if (data) {
+        console.log(data);
+      }
+      if (error) {
+        console.log(error.message);
+      }
+    }
+    console.log(taskToUpdate);
+  };
   const handleOptionClick = async (option) => {
     switch (option) {
       case "Delete":
@@ -43,7 +73,8 @@ export function HoverMoreModal({ taskId }) {
           const { data, error } = await supabase
             .from("todos")
             .delete()
-            .eq("id", taskId, "user_id", "999");
+            .eq("id", taskId)
+            .eq("user_id", "999");
           if (error) {
             console.log(error.message);
           }
@@ -52,14 +83,20 @@ export function HoverMoreModal({ taskId }) {
           }
         }
         break;
-      case "Edit": {
-        setShowMoreModal(() => ({ taskId: null }));
-        setEditDescription(() => ({
-          editId: taskId,
-        }));
+      case "Edit":
+        {
+          setEditDescription(() => ({
+            editId: taskId,
+          }));
+        }
+        break;
+      case "Complete":
+      case "Completed": {
+        handleCompleted(taskId);
       }
     }
   };
+
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
@@ -74,11 +111,15 @@ export function HoverMoreModal({ taskId }) {
           <div
             onClick={() => handleOptionClick(option.name)}
             key={index}
-            className={`flex cursor-pointer hover:bg-[#E7E8EA] w-full py-[1rem] px-[1.6rem] gap-[1.2rem] items-center ${
-              index >= 1 ? "border-b-[1px] border-b-[#E8E9EB]" : ""
-            } `}
+            className={`flex cursor-pointer hover:bg-[#E7E8EA] w-full py-[1rem] px-[1.6rem] gap-[1.2rem] items-center
+               ${index >= 1 ? "border-b-[1px] border-b-[#E8E9EB]" : ""} `}
           >
-            <img src={option.icon} alt={`${option.name}_icon`} />
+            <img
+              className="w-[24px] h-[24px]"
+              src={option.icon}
+              alt={`${option.name}_icon`}
+            />
+
             <span>{option.name}</span>
           </div>
         ))}
@@ -88,4 +129,5 @@ export function HoverMoreModal({ taskId }) {
 }
 HoverMoreModal.propTypes = {
   taskId: PropTypes.number,
+  complate: PropTypes.bool,
 };

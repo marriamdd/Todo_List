@@ -16,7 +16,7 @@ export default function MyDayPage() {
     };
     fetchTasks();
   }, []);
-
+  console.log(tasks, "tasks");
   const addTask = async (task) => {
     const { data, error } = await supabase
       .from("todos")
