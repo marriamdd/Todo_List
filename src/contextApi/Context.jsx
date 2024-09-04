@@ -13,6 +13,8 @@ const defaultContextValue = {
   setEditDescription: () => {},
   user: null,
   isLoaded: false,
+  searchTask: "",
+  setSearchtask: () => {},
 };
 
 export const MyContext = createContext(defaultContextValue);
@@ -25,7 +27,7 @@ export const MyProvider = ({ children }) => {
   });
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1280);
   const { user, isLoaded } = useUser();
-
+  const [searchTask, setSearchtask] = useState("");
   return (
     <MyContext.Provider
       value={{
@@ -39,6 +41,8 @@ export const MyProvider = ({ children }) => {
         setIsDesktop,
         editDescription,
         setEditDescription,
+        searchTask,
+        setSearchtask,
       }}
     >
       {children}

@@ -1,5 +1,9 @@
+import { MyContext } from "@/contextApi/Context";
 import { SignedIn, UserButton } from "@clerk/clerk-react";
+import { useContext } from "react";
 export default function Header() {
+  const { searchTask, setSearchtask } = useContext(MyContext);
+  console.log(searchTask);
   return (
     <div className="bg-[rgb(246,246,247)] flex items-center px-[1.6rem] xl:px-[3rem] py-[0.8rem] xl:py-[1.4rem] justify-between border-b-[1px] border-b-greyBorder">
       <div className="w-[5.7rem] flex xl:hidden">
@@ -26,6 +30,8 @@ export default function Header() {
             className=" bg-[#E7E8EA] pl-[4.5rem] text-[1.4rem] font-[400] rounded-[0.8rem] w-[460px] h-[4rem]"
             type="text"
             placeholder="Search"
+            value={searchTask}
+            onChange={(e) => setSearchtask(e.target.value)}
           />
           <img
             className="w-[16.993px] h-[16.13px] flex absolute top-[1.2rem] left-[1.4rem]"

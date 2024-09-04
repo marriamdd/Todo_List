@@ -3,8 +3,9 @@ import AddTask from "../components/AddTask";
 import { supabase } from "../config/supabaseClient";
 import TaskCard from "../components/TaskCard";
 import { MyContext } from "../contextApi/Context";
+
 export default function MyDayPage() {
-  const { tasks, setTasks, user, isLoaded } = useContext(MyContext);
+  const { tasks, setTasks, user, isLoaded, searchTask } = useContext(MyContext);
   useEffect(() => {
     const fetchTasks = async () => {
       const { data, error } = await supabase
@@ -29,13 +30,25 @@ export default function MyDayPage() {
     }
     return data;
   };
-
   return (
     <div>
-      <AddTask addTask={addTask} setTasks={setTasks} />
-      {tasks.map((task) => (
-        <TaskCard key={task.id} task={task} />
-      ))}
+      {searchTask.length > 2 ? (
+        <div>
+          <AddTask addTask={addTask} setTasks={setTasks} />
+          {tasks
+            .filter((task) => task.description.includes(searchTask))
+            .map((filteredTask) => (
+              <TaskCard key={filteredTask.id} task={filteredTask} />
+            ))}
+        </div>
+      ) : (
+        <div>
+          <AddTask addTask={addTask} setTasks={setTasks} />
+          {tasks.map((task) => (
+            <TaskCard key={task.id} task={task} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
