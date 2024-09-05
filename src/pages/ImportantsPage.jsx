@@ -65,7 +65,7 @@ const ImportantPage = () => {
         <div>
           <AddTask addTask={addTask} setTasks={setTasks} />
           {tasks.map((task) => (
-            <TaskCard key={task.id} task={task} />
+            <TaskCard BGcolor={"#E3EBFC"} key={task.id} task={task} />
           ))}
         </div>
       ) : (

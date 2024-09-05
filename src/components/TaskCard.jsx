@@ -10,7 +10,7 @@ import { supabase } from "../config/supabaseClient";
 import chroma from "chroma-js";
 
 import { HoverMoreModal } from "./HoverMoreModal";
-export default function TaskCard({ task }) {
+export default function TaskCard({ task, BGcolor }) {
   const { isDesktop, editDescription, setEditDescription, user } =
     useContext(MyContext);
 
@@ -57,7 +57,7 @@ export default function TaskCard({ task }) {
   useResizeEffect();
   return (
     <div
-      style={{ background: lightColorRef.current }}
+      style={{ background: BGcolor || lightColorRef.current }}
       className="xl:w-[25.2rem] relative rounded-[1rem] w-[34.3rem] h-[100%] pt-[1.2rem] mb-[1rem] px-[1.6rem] "
     >
       <div className="flex justify-between items-center">
@@ -116,4 +116,5 @@ TaskCard.propTypes = {
     complate: PropTypes.bool,
     important: PropTypes.bool,
   }).isRequired,
+  BGcolor: PropTypes.string,
 };
