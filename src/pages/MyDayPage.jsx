@@ -30,6 +30,7 @@ export default function MyDayPage() {
     }
     return data;
   };
+  console.log(tasks);
   return (
     <div>
       {searchTask.length > 2 ? (

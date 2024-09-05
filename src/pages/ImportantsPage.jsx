@@ -61,7 +61,6 @@ const ImportantPage = () => {
   };
   return (
     <div>
-      <h1>Important Tasks</h1>
       {tasks.length > 0 ? (
         <div>
           <AddTask addTask={addTask} setTasks={setTasks} />
