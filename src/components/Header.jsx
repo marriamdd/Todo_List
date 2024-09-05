@@ -2,16 +2,20 @@ import { MyContext } from "@/contextApi/Context";
 import { SignedIn, UserButton } from "@clerk/clerk-react";
 import { useContext, useState } from "react";
 import { useRef } from "react";
+import Language_selector from "./Language_selector";
 import { useClickOutsideEffect } from "@/customHooks/useClickOutsideEffect";
+
 export default function Header() {
   const { searchTask, setSearchtask } = useContext(MyContext);
   const [searchIconClicked, setSearchIconClicked] = useState(false);
+
   const inputRef = useRef(null);
   useClickOutsideEffect(
     inputRef,
     () => setSearchIconClicked(false),
     searchIconClicked
   );
+
   return (
     <div className="bg-[rgb(246,246,247)] flex items-center px-[1.6rem] xl:px-[3rem] py-[0.8rem] xl:py-[1.4rem] justify-between border-b-[1px] border-b-greyBorder">
       <div className="w-[5.7rem] flex xl:hidden">
@@ -44,7 +48,6 @@ export default function Header() {
           <input
             className=" bg-[#E7E8EA] pl-[4.5rem] text-[1.4rem] font-[400] rounded-[0.8rem] xl:w-[460px] md:w-[300px]  w-[250px] h-[4rem]"
             type="text"
-            placeholder="Search"
             value={searchTask}
             ref={inputRef}
             onChange={(e) => setSearchtask(e.target.value)}
@@ -56,14 +59,7 @@ export default function Header() {
           />
         </div>
         <div className="flex gap-[1.2rem] items-center">
-          <div className="xl:flex hidden gap-[0.4rem] items-center">
-            <span className="text-[1.4rem] font-[500]">EN</span>
-            <img
-              className="w-[22px] h-[22px]"
-              src="/assets/header_icons/material-symbols-light_navigate-next.svg"
-              alt="arrow"
-            />
-          </div>
+          <Language_selector />
 
           <SignedIn>
             <UserButton

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { MyContext } from "../contextApi/Context";
+import { useTranslation } from "react-i18next";
 import { useClickOutsideEffect } from "@/customHooks/useClickOutsideEffect";
 export default function AddTask({ addTask }) {
   const [openInput, setOpenInput] = useState(false);
@@ -42,7 +43,7 @@ export default function AddTask({ addTask }) {
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [inputValue]);
-
+  const { t } = useTranslation();
   return (
     <div className="w-full flex justify-center">
       {!openInput ? (
@@ -56,7 +57,7 @@ export default function AddTask({ addTask }) {
             alt="plus"
           />
           <span className="text-[1.6rem] font-[400] text-textColor leading-[2.4rem]">
-            Add a task
+            {t("AddTask")}
           </span>
         </div>
       ) : (

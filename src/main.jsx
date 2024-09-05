@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 import { MyProvider } from "./contextApi/Context.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
-
+import "./i18n.js";
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 if (!PUBLISHABLE_KEY) {

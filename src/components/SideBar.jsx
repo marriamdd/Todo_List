@@ -1,11 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { MyContext } from "../contextApi/Context";
 import { useContext, useEffect } from "react";
-
+import { useTranslation } from "react-i18next";
 export default function SideBar() {
   const { currentEndPoint, setCurrentEndPoint } = useContext(MyContext);
   const location = useLocation();
-
+  const { t } = useTranslation();
   useEffect(() => {
     if (location.pathname === "/MyDay") {
       setCurrentEndPoint("MyDay");
@@ -27,7 +27,7 @@ export default function SideBar() {
         >
           <img src="/assets/modal_icons/ph_sun-light.svg" alt="My_Day" />
           <span className="text-textColor text-[1.4rem] font-[400]">
-            My day
+            {t("homePage")}
           </span>
         </div>
       </Link>
@@ -39,7 +39,7 @@ export default function SideBar() {
         >
           <img src="/assets/modal_icons/ph_star-thin.svg" alt="Important" />
           <span className="text-textColor text-[1.4rem] font-[400]">
-            Important
+            {t("importantPage")}
           </span>
         </div>
       </Link>
@@ -55,7 +55,7 @@ export default function SideBar() {
             alt="DeashBoard"
           />
           <span className="text-textColor text-[1.4rem] font-[400]">
-            DeashBoard
+            {t("deashBoardPage")}
           </span>
         </div>
       </Link>
