@@ -60,7 +60,7 @@ const ImportantPage = () => {
     return data;
   };
   return (
-    <div>
+    <div className="animate-fadeIn">
       {tasks.length > 0 ? (
         <div>
           <AddTask addTask={addTask} setTasks={setTasks} />

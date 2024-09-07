@@ -81,17 +81,16 @@
     @apply bg-background text-foreground;
   }
 }
-/* .cl-rootBox {
-  background-color: red !important;
-  width: 100% !important
-
-  ;
-  height: 100vh;
-  .cl-cardBox {
-    width: 100%;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  .cl-card {
-    width: 100%;
-    max-width: 100%;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-} */
+}
+.animate-fadeIn {
+  animation: fadeIn 1s ease-out;
+}

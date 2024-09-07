@@ -9,7 +9,7 @@ export default function ChartExplainerCards({ taskData }) {
   ];
   console.log(taskData);
   return (
-    <div className="grid gap-[2.4rem] py-[2rem] grid-cols-2 xl:grid-cols-4 justify-center items-center">
+    <div className="grid  animate-fadeIn gap-[2.4rem] py-[2rem] grid-cols-2 xl:grid-cols-4 justify-center items-center">
       {taskDataOptions.map((task, index) => (
         <div
           key={index}

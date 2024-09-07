@@ -32,7 +32,7 @@ export default function MyDayPage() {
   };
   console.log(tasks);
   return (
-    <div>
+    <div className="animate-fadeIn">
       {searchTask.length > 2 ? (
         <div>
           <AddTask addTask={addTask} setTasks={setTasks} />

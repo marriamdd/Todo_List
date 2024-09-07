@@ -108,7 +108,7 @@ const PieChart = () => {
   };
 
   return (
-    <div className="px-[2rem]">
+    <div className="px-[2rem] animate-fadeIn">
       <ChartExplainerCards taskData={taskData} />
 
       <div className="transition-all duration-[1s] ease-in flex flex-col items-center  bg-[#FFF] border border-[#E7E8EA] rounded-[8px] w-[100%] px-[1rem] h-[564px]  md:h-[468px]">
