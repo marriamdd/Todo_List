@@ -2,13 +2,14 @@ import { MyContext } from "@/contextApi/Context";
 import { SignedIn, UserButton } from "@clerk/clerk-react";
 import { useContext, useState } from "react";
 import { useRef } from "react";
+import BurgerModal from "./BurgerModal";
 import Language_selector from "./Language_selector";
 import { useClickOutsideEffect } from "@/customHooks/useClickOutsideEffect";
 
 export default function Header() {
   const { searchTask, setSearchtask } = useContext(MyContext);
   const [searchIconClicked, setSearchIconClicked] = useState(false);
-
+  const [showBurgerModal, setShowBurgerModal] = useState(false);
   const inputRef = useRef(null);
   useClickOutsideEffect(
     inputRef,
@@ -19,8 +20,18 @@ export default function Header() {
   return (
     <div className="bg-[rgb(246,246,247)] flex items-center px-[1.6rem] xl:px-[3rem] py-[0.8rem] xl:py-[1.4rem] justify-between border-b-[1px] border-b-greyBorder">
       <div className="w-[5.7rem] flex xl:hidden">
-        <img src="/assets/header_icons/Vector.svg" alt="burger" />
+        <img
+          onClick={() => setShowBurgerModal((prev) => !prev)}
+          src="/assets/header_icons/Vector.svg"
+          alt="burger"
+        />
       </div>
+      {showBurgerModal && (
+        <BurgerModal
+          showBurgerModal={showBurgerModal}
+          setShowBurgerModal={setShowBurgerModal}
+        />
+      )}
       <div className="w-[5.7rem] flex xl:hidden justify-center">
         {!searchIconClicked && (
           <img src="/assets/header_icons/Ellipse 1097.svg" alt="ellipse" />

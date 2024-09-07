@@ -2,7 +2,8 @@ import { Link, useLocation } from "react-router-dom";
 import { MyContext } from "../contextApi/Context";
 import { useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-export default function SideBar() {
+import PropTypes from "prop-types";
+export default function SideBar({ setShowBurgerModal, showBurgerModal }) {
   const { currentEndPoint, setCurrentEndPoint } = useContext(MyContext);
   const location = useLocation();
   const { t } = useTranslation();
@@ -18,9 +19,14 @@ export default function SideBar() {
   }, [location.pathname, setCurrentEndPoint]);
 
   return (
-    <div className="bg-[#F6F6F7] border-r-[1px] border-l-greyBorder pt-[10.1rem] pl-[2.4rem] flex flex-col w-full">
+    <div
+      className={` ${
+        showBurgerModal ? "" : "bg-[#F6F6F7]"
+      } border-r-[1px] border-l-greyBorder pt-[10.1rem] pl-[2.4rem] flex flex-col w-full`}
+    >
       <Link to="/MyDay">
         <div
+          onClick={() => setShowBurgerModal(false)}
           className={`flex items-center gap-[1.2rem] rounded-[0.4rem] px-[1rem] py-[1.6rem] w-[25.2rem] h-[4.8rem] ${
             currentEndPoint === "MyDay" ? "bg-[#E7E8EA]" : ""
           }`}
@@ -33,6 +39,7 @@ export default function SideBar() {
       </Link>
       <Link to="/Important">
         <div
+          onClick={() => setShowBurgerModal(false)}
           className={`flex items-center gap-[1.2rem] rounded-[0.4rem] px-[1rem] py-[1.6rem] w-[25.2rem] h-[4.8rem] ${
             currentEndPoint === "Important" ? "bg-[#E7E8EA]" : ""
           }`}
@@ -45,6 +52,7 @@ export default function SideBar() {
       </Link>
       <Link to="/DeashBoard">
         <div
+          onClick={() => setShowBurgerModal(false)}
           className={`flex items-center gap-[1.2rem] rounded-[0.4rem] px-[1rem] py-[1.6rem] w-[25.2rem] h-[4.8rem] ${
             currentEndPoint === "DeashBoard" ? "bg-[#E7E8EA]" : ""
           }`}
@@ -62,3 +70,7 @@ export default function SideBar() {
     </div>
   );
 }
+SideBar.propTypes = {
+  setShowBurgerModal: PropTypes.bool,
+  showBurgerModal: PropTypes.bool,
+};
