@@ -1,5 +1,4 @@
 import AddTask from "../components/AddTask";
-
 import TaskCard from "../components/TaskCard";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "@/config/supabaseClient";
@@ -11,16 +10,8 @@ const ImportantPage = () => {
   const { user, isLoaded } = useContext(MyContext);
 
   useEffect(() => {
-    console.log("User:", user);
-    console.log("Is Loaded:", isLoaded);
-
-    if (!isLoaded) {
-      console.error("User data is still loading");
-      return;
-    }
-
+    if (!isLoaded) return;
     if (!user) {
-      console.error("User is not available");
       setLoading(false);
       return;
     }
@@ -34,7 +25,7 @@ const ImportantPage = () => {
           .eq("important", true)
           .eq("user_id", user.id);
         if (error) throw error;
-        setTasks(data);
+        setTasks(data || []);
       } catch (error) {
         console.error("Error fetching important tasks:", error.message);
       } finally {
@@ -45,23 +36,29 @@ const ImportantPage = () => {
     fetchImportantTasks();
   }, [user, isLoaded]);
 
-  if (loading) return <p>Loading...</p>;
-  console.log(tasks, "ll");
   const addTask = async (task) => {
     const { data, error } = await supabase
       .from("todos")
       .insert([task])
       .select()
       .single();
+
     if (error) {
-      console.error("error adding task:", error);
+      console.error("Error adding task:", error.message);
       return null;
     }
+
+    setTasks((prevTasks) => [...prevTasks, data]);
     return data;
   };
+
   return (
     <div className="animate-fadeIn">
-      {tasks.length > 0 ? (
+      {loading ? (
+        <div className="flex h-[100vh] w-full  items-center justify-center">
+          <span className="text-[2rem] font-[600]">Loading...</span>
+        </div>
+      ) : tasks.length > 0 ? (
         <div>
           <AddTask addTask={addTask} setTasks={setTasks} />
           {tasks.map((task) => (
@@ -69,7 +66,9 @@ const ImportantPage = () => {
           ))}
         </div>
       ) : (
-        <p>No important tasks found.</p>
+        <div>
+          <img src="/assets/empty/oc-empty-cart.svg" alt="No important tasks" />
+        </div>
       )}
     </div>
   );
