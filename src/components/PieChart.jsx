@@ -5,10 +5,13 @@ import { MyContext } from "@/contextApi/Context";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "@/config/supabaseClient";
 import ChartExplainerCards from "./ChartExplainerCards";
+import { useTranslation } from "react-i18next";
+
 Chart.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 const PieChart = () => {
   const { setTasks, user } = useContext(MyContext);
+  const { t } = useTranslation();
 
   const [chartData, setChartData] = useState({
     labels: [],
@@ -20,42 +23,43 @@ const PieChart = () => {
       },
     ],
   });
-  let totalTasks;
-  let importantTasks;
-  let leftTasks;
-  let completedTasks;
+
   const [taskData, setTaskData] = useState({
     totalTasks: 0,
     importantTasks: 0,
     completedTasks: 0,
     leftTasks: 0,
   });
+
   useEffect(() => {
     const fetchTasks = async () => {
       const { data, error } = await supabase
         .from("todos")
         .select("*")
         .eq("user_id", user.id);
+
       if (error) console.error("Error fetching tasks:", error);
       else {
         setTasks(data);
 
-        totalTasks = data.length;
-        importantTasks = data.filter((task) => task.important).length;
-        leftTasks = totalTasks - importantTasks;
-        completedTasks = data.filter((task) => task.complate).length;
+        const totalTasks = data.length;
+        const importantTasks = data.filter((task) => task.important).length;
+        const leftTasks = totalTasks - importantTasks;
+        const completedTasks = data.filter((task) => task.complate).length;
+
         setTaskData({
           totalTasks,
           importantTasks,
           completedTasks,
           leftTasks,
         });
+
         setChartData({
           labels: [
-            "Your Activities",
-            "Important Tasks",
-            "Done Tasks",
-            "Waiting to do",
+            t("YourActivities"),
+            t("ImportantTasks"),
+            t("DoneTasks"),
+            t("Waitingtodo"),
           ],
           datasets: [
             {
@@ -68,7 +72,7 @@ const PieChart = () => {
       }
     };
     fetchTasks();
-  }, [user]);
+  }, [user, setTasks, t]);
 
   const options = {
     plugins: {
@@ -111,15 +115,15 @@ const PieChart = () => {
     <div className="px-[2rem] animate-fadeIn">
       <ChartExplainerCards taskData={taskData} />
 
-      <div className="transition-all duration-[1s] ease-in flex flex-col items-center  bg-[#FFF] border border-[#E7E8EA] rounded-[8px] w-[100%] px-[1rem] h-[564px]  md:h-[468px]">
+      <div className="transition-all duration-[1s] ease-in flex flex-col items-center bg-[#FFF] border border-[#E7E8EA] rounded-[8px] w-[100%] px-[1rem] h-[564px] md:h-[468px]">
         <div className="w-full p-[1rem] border-b border-b:#D7D9DD">
-          <span className="text-[20px]">Task by Status</span>
+          <span className="text-[20px]">{t("TaskByStatus")}</span>{" "}
         </div>
-        <div className=" transition-all duration-[1s] ease-in flex flex-col md:flex-row xl:justify-center items-center pt-[2rem] gap-[4rem] md:gap-[14rem]">
-          <div className="md:w-[33.5rem]  md:h-[32.5rem] transition-all duration-[1s] ease-in w-[232px] h-[225px]">
+        <div className="transition-all duration-[1s] ease-in flex flex-col md:flex-row xl:justify-center items-center pt-[2rem] gap-[4rem] md:gap-[14rem]">
+          <div className="md:w-[33.5rem] md:h-[32.5rem] transition-all duration-[1s] ease-in w-[232px] h-[225px]">
             <Pie data={chartData} options={options} />
           </div>
-          <div className="ml-[24px] flex  gap-[2rem] flex-col">
+          <div className="ml-[24px] flex gap-[2rem] flex-col">
             {chartData.labels.map((label, index) => (
               <div key={label} className="flex items-center mb-2">
                 <div

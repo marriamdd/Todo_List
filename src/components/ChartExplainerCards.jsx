@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
-
+import { useTranslation } from "react-i18next";
 export default function ChartExplainerCards({ taskData }) {
+  const { t } = useTranslation();
   const taskDataOptions = [
-    { label: "Total Tasks", value: taskData.totalTasks },
-    { label: "Completed Tasks", value: taskData.completedTasks },
-    { label: "Left Tasks", value: taskData.leftTasks },
-    { label: "Important Tasks", value: taskData.importantTasks },
+    { label: t("TotalTasks"), value: taskData.totalTasks },
+    { label: t("CompletedTasks"), value: taskData.completedTasks },
+    { label: t("LeftTasks"), value: taskData.leftTasks },
+    { label: t("ImportantTasks"), value: taskData.importantTasks },
   ];
   console.log(taskData);
   return (

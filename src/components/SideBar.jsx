@@ -3,24 +3,31 @@ import { MyContext } from "../contextApi/Context";
 import { useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
+
 export default function SideBar({ setShowBurgerModal, showBurgerModal }) {
   const { currentEndPoint, setCurrentEndPoint } = useContext(MyContext);
   const location = useLocation();
   const { t } = useTranslation();
+
   useEffect(() => {
-    if (location.pathname === "/") {
-      setCurrentEndPoint("/");
-    }
-    if (location.pathname === "/Important") {
-      setCurrentEndPoint("Important");
-    } else if (location.pathname === "/DeashBoard") {
-      setCurrentEndPoint("DeashBoard");
+    switch (location.pathname) {
+      case "/":
+        setCurrentEndPoint("/");
+        break;
+      case "/Important":
+        setCurrentEndPoint("Important");
+        break;
+      case "/DeashBoard":
+        setCurrentEndPoint("DeashBoard");
+        break;
+      default:
+        setCurrentEndPoint("/");
     }
   }, [location.pathname, setCurrentEndPoint]);
 
   return (
     <div
-      className={` ${
+      className={`${
         showBurgerModal ? "" : "bg-[#F6F6F7]"
       } border-r-[1px] border-l-greyBorder pt-[10.1rem] pl-[2.4rem] flex flex-col w-full`}
     >
@@ -70,7 +77,8 @@ export default function SideBar({ setShowBurgerModal, showBurgerModal }) {
     </div>
   );
 }
+
 SideBar.propTypes = {
-  setShowBurgerModal: PropTypes.bool,
-  showBurgerModal: PropTypes.bool,
+  setShowBurgerModal: PropTypes.func.isRequired,
+  showBurgerModal: PropTypes.bool.isRequired,
 };
