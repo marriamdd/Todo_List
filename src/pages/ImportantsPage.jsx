@@ -10,11 +10,7 @@ const ImportantPage = () => {
   const { user, isLoaded } = useContext(MyContext);
 
   useEffect(() => {
-    if (!isLoaded) return;
-    if (!user) {
-      setLoading(false);
-      return;
-    }
+    if (!isLoaded || !user) return;
 
     const fetchImportantTasks = async () => {
       try {
@@ -54,21 +50,19 @@ const ImportantPage = () => {
 
   return (
     <div className="animate-fadeIn">
-      {loading ? (
-        <div className="flex h-[100vh] w-full  items-center justify-center">
-          <span className="text-[2rem] font-[600]">Loading...</span>
-        </div>
-      ) : tasks.length > 0 ? (
-        <div>
-          <AddTask addTask={addTask} setTasks={setTasks} />
-          {tasks.map((task) => (
-            <TaskCard BGcolor={"#E3EBFC"} key={task.id} task={task} />
-          ))}
-        </div>
-      ) : (
-        <div>
+      {!loading && tasks.length === 0 ? (
+        <div className="flex items-center pt-[2rem] justify-center">
           <img src="/assets/empty/oc-empty-cart.svg" alt="No important tasks" />
         </div>
+      ) : (
+        tasks.length > 0 && (
+          <div>
+            <AddTask addTask={addTask} setTasks={setTasks} />
+            {tasks.map((task) => (
+              <TaskCard BGcolor={"#E3EBFC"} key={task.id} task={task} />
+            ))}
+          </div>
+        )
       )}
     </div>
   );
