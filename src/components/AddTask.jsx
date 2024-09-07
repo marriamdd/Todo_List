@@ -45,7 +45,7 @@ export default function AddTask({ addTask }) {
   }, [inputValue]);
   const { t } = useTranslation();
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center pt-[3.2rem] pb-[5.6rem]">
       {!openInput ? (
         <div
           onClick={() => setOpenInput(true)}
