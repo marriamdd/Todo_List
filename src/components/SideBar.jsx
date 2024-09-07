@@ -8,8 +8,8 @@ export default function SideBar({ setShowBurgerModal, showBurgerModal }) {
   const location = useLocation();
   const { t } = useTranslation();
   useEffect(() => {
-    if (location.pathname === "/MyDay") {
-      setCurrentEndPoint("MyDay");
+    if (location.pathname === "/") {
+      setCurrentEndPoint("/");
     }
     if (location.pathname === "/Important") {
       setCurrentEndPoint("Important");
@@ -24,11 +24,11 @@ export default function SideBar({ setShowBurgerModal, showBurgerModal }) {
         showBurgerModal ? "" : "bg-[#F6F6F7]"
       } border-r-[1px] border-l-greyBorder pt-[10.1rem] pl-[2.4rem] flex flex-col w-full`}
     >
-      <Link to="/MyDay">
+      <Link to="/">
         <div
           onClick={() => setShowBurgerModal(false)}
           className={`flex items-center gap-[1.2rem] rounded-[0.4rem] px-[1rem] py-[1.6rem] w-[25.2rem] h-[4.8rem] ${
-            currentEndPoint === "MyDay" ? "bg-[#E7E8EA]" : ""
+            currentEndPoint === "/" ? "bg-[#E7E8EA]" : ""
           }`}
         >
           <img src="/assets/modal_icons/ph_sun-light.svg" alt="My_Day" />

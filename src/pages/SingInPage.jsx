@@ -9,7 +9,7 @@ export default function SignInPage() {
 
   useEffect(() => {
     if (isLoaded && user) {
-      navigate("/MyDay");
+      navigate("/");
     }
   }, [isLoaded, user, navigate]);
 

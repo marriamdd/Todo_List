@@ -1,28 +1,43 @@
 import "./App.css";
-
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MyDayPage from "./pages/MyDayPage";
 import ImportantPage from "./pages/ImportantsPage";
-import SingInPage from "./pages/SingInPage";
+import SignInPage from "./pages/SingInPage";
 import Layout from "./layouts/Layout";
 import DeashBoardPage from "./pages/DeashBoardPage";
 import { QueryClient, QueryClientProvider } from "react-query";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+const queryClient = new QueryClient();
+
+const router = createBrowserRouter([
+  {
+    path: "/SignIn",
+    element: <SignInPage />,
+  },
+  {
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <ProtectedRoute element={<MyDayPage />} />,
+      },
+      {
+        path: "Important",
+        element: <ProtectedRoute element={<ImportantPage />} />,
+      },
+      {
+        path: "DeashBoard",
+        element: <ProtectedRoute element={<DeashBoardPage />} />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  const queryClient = new QueryClient();
-
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<SingInPage />} />
-          <Route path="/" element={<Layout />}>
-            <Route path="/MyDay" element={<MyDayPage />} />
-            <Route path="/Important" element={<ImportantPage />} />
-            <Route path="/DeashBoard" element={<DeashBoardPage />} />
-          </Route>
-        </Routes>
-      </Router>
+      <RouterProvider router={router} />
     </QueryClientProvider>
   );
 }
