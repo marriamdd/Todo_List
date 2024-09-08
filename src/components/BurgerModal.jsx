@@ -35,6 +35,6 @@ function BurgerModal({ showBurgerModal, setShowBurgerModal }) {
 
 export default BurgerModal;
 BurgerModal.propTypes = {
-  setShowBurgerModal: PropTypes.bool,
+  setShowBurgerModal: PropTypes.func,
   showBurgerModal: PropTypes.bool,
 };

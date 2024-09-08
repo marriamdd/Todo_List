@@ -67,7 +67,7 @@ export default function TaskCard({ task, BGcolor }) {
             src="/assets/task_icons/material-symbols-light_date-range-outline.svg"
             alt="date"
           />
-          <span className="text-[1.4rem] font-[400] text-textColor leading-[2rem]">
+          <span className="text-[1.4rem]  font-[400] text-textColor leading-[2rem]">
             {formattedDate}
           </span>
         </div>
@@ -85,14 +85,14 @@ export default function TaskCard({ task, BGcolor }) {
       {editDescription.editId == task.id ? (
         <textarea
           ref={textareaRef}
-          className="w-[30rem] mt-[1rem]  xl:w-[22rem] bg-transparent shadow-custom rounded-[0.8rem] px-[1rem] py-[1.4rem] gap-[1rem] resize-none overflow-hidden"
+          className="w-[30rem] mt-[1rem] text-wrap  xl:w-[22rem] bg-transparent shadow-custom rounded-[0.8rem] px-[1rem] py-[1.4rem] gap-[1rem] resize-none overflow-hidden"
           onKeyDown={handleEndEditing}
           rows={1}
           onChange={(e) => handleChangeDescription(e.target.value)}
           value={updatedDescription}
         ></textarea>
       ) : (
-        <p className="pb-[2.6rem] pt-[1.6rem] text-textColor text-[1.4rem] font-[400] leading-[20px]">
+        <p className="pb-[2.6rem] w-[20rem] break-words pt-[1.6rem] text-textColor text-[1.4rem] font-[400] leading-[20px]">
           {updatedDescription}
         </p>
       )}

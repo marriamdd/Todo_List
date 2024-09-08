@@ -79,6 +79,6 @@ export default function SideBar({ setShowBurgerModal, showBurgerModal }) {
 }
 
 SideBar.propTypes = {
-  setShowBurgerModal: PropTypes.func.isRequired,
-  showBurgerModal: PropTypes.bool.isRequired,
+  setShowBurgerModal: PropTypes.func,
+  showBurgerModal: PropTypes.bool,
 };
