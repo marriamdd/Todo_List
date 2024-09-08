@@ -4,7 +4,7 @@ const Register = () => {
   return (
     <div>
       <SignUp
-        path="/register"
+        // path="/register"
         signInUrl="/login"
         appearance={{
           elements: {
