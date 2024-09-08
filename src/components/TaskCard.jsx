@@ -1,47 +1,37 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { MyContext } from "../contextApi/Context";
-
 import PropTypes from "prop-types";
-
-import { useResizeEffect } from "../customHooks/useResizeEffect";
 import { format } from "date-fns";
-import { useRef } from "react";
 import { supabase } from "../config/supabaseClient";
 import chroma from "chroma-js";
-
 import { HoverMoreModal } from "./HoverMoreModal";
+
 export default function TaskCard({ task, BGcolor }) {
   const { isDesktop, editDescription, setEditDescription, user } =
     useContext(MyContext);
 
   const textareaRef = useRef(null);
+  const [updatedDescription, setUpdatedDescription] = useState(
+    task.description
+  );
 
-  console.log(task.created_at);
-  const dateStr = task.created_at;
-  const date = new Date(dateStr);
-  let OldDescription = task.description;
-  const [updatedDescription, setUpdatedDescription] = useState(OldDescription);
+  const formattedDate = format(new Date(task.created_at), "dd/MM/yy");
 
-  const formattedDate = format(date, "dd/MM/yy");
-  const handleChangeDescription = (e) => {
-    console.log(e);
-    setUpdatedDescription(e);
-  };
+  const handleChangeDescription = (e) => setUpdatedDescription(e);
+
   const handleEndEditing = async (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       setEditDescription(() => ({ editId: null }));
       const { data, error } = await supabase
         .from("todos")
         .update({ description: updatedDescription })
-        .eq("id", task.id, "user_id", user.id);
-      if (data) {
-        console.log(data);
-      }
-      if (error) {
-        console.log(error.message);
-      }
+        .eq("id", task.id)
+        .eq("user_id", user.id);
+      if (data) console.log(data);
+      if (error) console.log(error.message);
     }
   };
+
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
@@ -49,55 +39,54 @@ export default function TaskCard({ task, BGcolor }) {
     }
   }, [updatedDescription]);
 
-  const hue = Math.floor(Math.random() * 360);
-  const pastelColor = chroma.hsl(hue, 0.7, 0.85).hex();
+  const pastelColor = chroma
+    .hsl(Math.floor(Math.random() * 360), 0.7, 0.85)
+    .hex();
   const lightColorRef = useRef(pastelColor);
-  console.log(editDescription.editId == task.id);
-  console.log(task.important, "es");
-  useResizeEffect();
+
   return (
     <div
       style={{ background: BGcolor || lightColorRef.current }}
-      className="xl:w-[25.2rem] relative rounded-[1rem] w-[34.3rem] h-[100%] pt-[1.2rem] mb-[1rem] px-[1.6rem] "
+      className="relative shadow-md break-inside-avoid-column rounded-lg p-4 mb-4"
     >
       <div className="flex justify-between items-center">
-        <div className="bg-[#FDF8F2] w-[12.6rem] h-[3rem] rounded-[3rem] flex justify-center gap-[0.5rem] items-center">
+        <div className="bg-[#FDF8F2] w-auto h-12 rounded-full flex justify-center gap-2 items-center">
           <img
-            className="w-[2.2rem] h-[2.2rem]"
+            className="w-6 h-6"
             src="/assets/task_icons/material-symbols-light_date-range-outline.svg"
             alt="date"
           />
-          <span className="text-[1.4rem]  font-[400] text-textColor leading-[2rem]">
+          <span className="text-lg font-normal text-textColor leading-6">
             {formattedDate}
           </span>
         </div>
-        <div className="w-[12.6rem] flex justify-end">
-          {isDesktop && (
+        {isDesktop && (
+          <div className="flex-grow flex justify-end">
             <HoverMoreModal
               taskId={task.id}
               complate={task.complate}
               important={task.important}
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
-      {editDescription.editId == task.id ? (
+      {editDescription.editId === task.id ? (
         <textarea
           ref={textareaRef}
-          className="w-[30rem] mt-[1rem] text-wrap  xl:w-[22rem] bg-transparent shadow-custom rounded-[0.8rem] px-[1rem] py-[1.4rem] gap-[1rem] resize-none overflow-hidden"
+          className="w-full mt-4 bg-transparent shadow-lg rounded-lg px-4 py-3 resize-none overflow-hidden"
           onKeyDown={handleEndEditing}
           rows={1}
           onChange={(e) => handleChangeDescription(e.target.value)}
           value={updatedDescription}
         ></textarea>
       ) : (
-        <p className="pb-[2.6rem] w-[20rem] break-words pt-[1.6rem] text-textColor text-[1.4rem] font-[400] leading-[20px]">
+        <p className="pt-4 text-textColor break-words text-lg font-normal leading-6">
           {updatedDescription}
         </p>
       )}
 
-      <div className="w-full flex hover:opacity-[1] justify-end pb-[1.4rem]">
+      <div className="flex justify-end pb-4">
         <HoverMoreModal
           taskId={task.id}
           complate={task.complate}
