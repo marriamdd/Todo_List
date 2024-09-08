@@ -37,7 +37,7 @@ export function HoverMoreModal({ taskId, complate, important }) {
       name: t("Delete"),
     },
   ];
-
+  console.log("lll");
   const handleOptionClick = async (optionName) => {
     try {
       switch (optionName) {
