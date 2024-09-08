@@ -7,14 +7,25 @@ import Layout from "./layouts/Layout";
 import DeashBoardPage from "./pages/DeashBoardPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProtectedRoute from "./components/ProtectedRoute";
-
+import Register from "./pages/Register";
+import AuthLayout from "./layouts/AuthLayout";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    path: "/SignIn",
-    element: <SignInPage />,
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/SignIn",
+        element: <SignInPage />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+    ],
   },
+
   {
     element: <Layout />,
     children: [
