@@ -1,5 +1,5 @@
 import { MyContext } from "@/contextApi/Context";
-// import { SignedIn, UserButton } from "@clerk/clerk-react";
+import { SignedIn, UserButton } from "@clerk/clerk-react";
 import { useContext, useState } from "react";
 import { useRef } from "react";
 import BurgerModal from "./BurgerModal";
@@ -72,8 +72,8 @@ export default function Header() {
         <div className="flex gap-[1.2rem] items-center">
           <Language_selector />
 
-          {/* <SignedIn> */}
-          {/* <UserButton
+          <SignedIn>
+            <UserButton
               appearance={{
                 elements: {
                   avatarBox: {
@@ -82,8 +82,8 @@ export default function Header() {
                   },
                 },
               }}
-            /> */}
-          {/* </SignedIn> */}
+            />
+          </SignedIn>
         </div>
       </div>
     </div>

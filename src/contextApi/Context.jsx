@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import PropTypes from "prop-types";
-// import { useUser } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 
 const defaultContextValue = {
   currentEndPoint: "",
@@ -26,7 +26,7 @@ export const MyProvider = ({ children }) => {
     editId: null,
   });
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1280);
-  // const { user, isLoaded } = useUser();
+  const { user, isLoaded } = useUser();
   const [searchTask, setSearchtask] = useState("");
   return (
     <MyContext.Provider
@@ -35,8 +35,8 @@ export const MyProvider = ({ children }) => {
         setTasks,
         currentEndPoint,
         setCurrentEndPoint,
-        // user,
-        // isLoaded,
+        user,
+        isLoaded,
         isDesktop,
         setIsDesktop,
         editDescription,
