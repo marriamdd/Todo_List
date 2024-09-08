@@ -13,20 +13,6 @@ const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    element: <AuthLayout />,
-    children: [
-      {
-        path: "/login",
-        element: <SignInPage />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-    ],
-  },
-
-  {
     element: (
       <ProtectedRoute>
         <Layout />
@@ -44,6 +30,19 @@ const router = createBrowserRouter([
       {
         path: "DeashBoard",
         element: <ProtectedRoute element={<DeashBoardPage />} />,
+      },
+    ],
+  },
+  {
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/login",
+        element: <SignInPage />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
     ],
   },
