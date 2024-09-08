@@ -5,7 +5,7 @@ const Register = () => {
     <div>
       <SignUp
         path="/register"
-        signInUrl="/SignIn"
+        signInUrl="/login"
         appearance={{
           elements: {
             main: "flex flex-col-reverse",

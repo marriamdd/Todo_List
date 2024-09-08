@@ -1,19 +1,15 @@
-import PropTypes from "prop-types";
-import { useUser } from "@clerk/clerk-react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
+import { useAuth } from "@clerk/clerk-react";
 
-const ProtectedRoute = ({ element }) => {
-  const { user } = useUser();
+function ProtectedRoute({ children }) {
+  const { userId } = useAuth();
+  const location = useLocation();
 
-  if (!user) {
-    return <Navigate to="/SignIn" replace />;
+  if (!userId) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return element;
-};
-
-ProtectedRoute.propTypes = {
-  element: PropTypes.element.isRequired,
-};
+  return children;
+}
 
 export default ProtectedRoute;
