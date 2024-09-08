@@ -17,7 +17,7 @@ export default function MyDayPage() {
     };
     fetchTasks();
   }, [user, isLoaded]);
-  console.log(tasks, "tasks");
+
   const addTask = async (task) => {
     const { data, error } = await supabase
       .from("todos")
@@ -30,7 +30,7 @@ export default function MyDayPage() {
     }
     return data;
   };
-  console.log(tasks);
+
   return (
     <div className="animate-fadeIn">
       {searchTask.length > 2 ? (
