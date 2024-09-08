@@ -4,7 +4,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import PropTypes from "prop-types";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { MyContext } from "@/contextApi/Context";
 import { supabase } from "@/config/supabaseClient";
 import { handleImportant } from "@/customHooks/handleImportant";
@@ -14,6 +14,23 @@ import { useTranslation } from "react-i18next";
 export function HoverMoreModal({ taskId, complate, important }) {
   const { tasks, setTasks, setEditDescription, user } = useContext(MyContext);
   const { t } = useTranslation();
+
+  const [isMobile, setIsMobile] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Detect mobile screen
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const options = [
     {
@@ -37,7 +54,7 @@ export function HoverMoreModal({ taskId, complate, important }) {
       name: t("Delete"),
     },
   ];
-  console.log("lll");
+
   const handleOptionClick = async (optionName) => {
     try {
       switch (optionName) {
@@ -78,13 +95,18 @@ export function HoverMoreModal({ taskId, complate, important }) {
     }
   };
 
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <HoverCard>
+    <HoverCard open={isMobile ? isOpen : undefined} onOpenChange={setIsOpen}>
       <HoverCardTrigger asChild>
         <img
           className="cursor-pointer md:opacity-0 hover:opacity-[1]"
           src="/assets/task_icons/mingcute_more-2-line.svg"
           alt="more"
+          onClick={isMobile ? handleClick : undefined} // On mobile, trigger the click
         />
       </HoverCardTrigger>
       <HoverCardContent className="w-[188px] xl:w-[192px] rounded-[8px]">
