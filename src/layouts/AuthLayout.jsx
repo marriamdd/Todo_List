@@ -1,7 +1,8 @@
 import { Outlet } from "react-router-dom";
-// import Pattern from "../components/DesktopLoginPattern";
+
 import { MyContext } from "@/contextApi/Context";
 import { useContext } from "react";
+import Pattern from "@/components/Patterns";
 
 const AuthLayout = () => {
   const { isDesktop } = useContext(MyContext);
@@ -13,7 +14,7 @@ const AuthLayout = () => {
           : "justify-center items-center"
       } xl:pl-[66px] xl:pr-[45px] overflow-hidden max-w-[1280px] mx-auto`}
     >
-      {/* {isDesktop && <Pattern />} */}
+      {isDesktop && <Pattern />}
 
       <div className={`w-full max-w-[400px]`}>
         <Outlet />

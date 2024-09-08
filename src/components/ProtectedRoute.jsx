@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
 
+// eslint-disable-next-line react/prop-types
 function ProtectedRoute({ children }) {
   const { userId } = useAuth();
   const location = useLocation();

@@ -21,15 +21,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <ProtectedRoute element={<MyDayPage />} />,
+        element: <MyDayPage />,
       },
       {
-        path: "Important",
-        element: <ProtectedRoute element={<ImportantPage />} />,
+        path: "/Important",
+        element: <ImportantPage />,
       },
       {
-        path: "DeashBoard",
-        element: <ProtectedRoute element={<DeashBoardPage />} />,
+        path: "/DeashBoard",
+        element: <DeashBoardPage />,
       },
     ],
   },
