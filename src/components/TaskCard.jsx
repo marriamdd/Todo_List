@@ -61,7 +61,7 @@ export default function TaskCard({ task, BGcolor }) {
           </span>
         </div>
         {isDesktop && (
-          <div className="flex-grow flex justify-end">
+          <div className="flex-grow hidden md:flex justify-end">
             <HoverMoreModal
               taskId={task.id}
               complate={task.complate}
