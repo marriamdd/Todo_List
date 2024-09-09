@@ -35,7 +35,7 @@ export function HoverMoreModal({ taskId, complate, important }) {
   const options = [
     {
       icon: important
-        ? "public/assets/task_icons/icons8-star-48.png"
+        ? "/assets/task_icons/icons8-star-48.png"
         : "/assets/modal_icons/ph_star-thin.svg",
       name: t("Importance"),
     },
