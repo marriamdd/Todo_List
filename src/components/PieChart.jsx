@@ -55,17 +55,12 @@ const PieChart = () => {
         });
 
         setChartData({
-          labels: [
-            t("YourActivities"),
-            t("ImportantTasks"),
-            t("DoneTasks"),
-            t("Waitingtodo"),
-          ],
+          labels: [t("ImportantTasks"), t("DoneTasks"), t("Waitingtodo")],
           datasets: [
             {
               label: "# of Tasks",
-              data: [totalTasks, importantTasks, completedTasks, leftTasks],
-              backgroundColor: ["#00A9D7", "#FFA400", "#80BC00", "#6E7C7C"],
+              data: [importantTasks, completedTasks, leftTasks],
+              backgroundColor: ["#FFA400", "#80BC00", "#00A9D7"],
             },
           ],
         });
@@ -112,18 +107,18 @@ const PieChart = () => {
   };
 
   return (
-    <div className="px-[2rem] animate-fadeIn">
+    <div className="px-[20px] pb-[30px] animate-fadeIn">
       <ChartExplainerCards taskData={taskData} />
 
-      <div className="transition-all duration-[1s] ease-in flex flex-col items-center bg-[#FFF] border border-[#E7E8EA] rounded-[8px] w-[100%] px-[1rem] h-[564px] md:h-[468px]">
-        <div className="w-full p-[1rem] border-b border-b:#D7D9DD">
+      <div className="transition-all duration-[1s] ease-in flex  flex-col items-center bg-[#FFF] border border-[#E7E8EA] rounded-[8px] w-[100%] px-[10px] h-[564px] md:h-[468px]">
+        <div className="w-full p-[10px] border-b border-b:#D7D9DD">
           <span className="text-[20px]">{t("TaskByStatus")}</span>{" "}
         </div>
-        <div className="transition-all duration-[1s] ease-in flex flex-col md:flex-row xl:justify-center items-center pt-[2rem] gap-[4rem] md:gap-[14rem]">
-          <div className="md:w-[33.5rem] md:h-[32.5rem] transition-all duration-[1s] ease-in w-[232px] h-[225px]">
+        <div className="transition-all duration-[1s] ease-in flex flex-col md:flex-row xl:justify-center items-center pt-[20px] gap-[4px] md:gap-[14px]">
+          <div className="md:w-[335px] md:h-[325px] transition-all duration-[1s] ease-in w-[232px] h-[225px]">
             <Pie data={chartData} options={options} />
           </div>
-          <div className="ml-[24px] flex gap-[2rem] flex-col">
+          <div className="ml-[24px] mt-[20px]  flex  flex-col">
             {chartData.labels.map((label, index) => (
               <div key={label} className="flex items-center mb-2">
                 <div

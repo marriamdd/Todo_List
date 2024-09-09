@@ -5,12 +5,15 @@ import SideBar from "../components/SideBar";
 
 export default function Layout() {
   return (
-    <div className="grid grid-cols-4 min-h-screen">
-      <div className="col-span-1 hidden xl:flex  ">
+    <div
+      style={{ fontSize: "62.5%" }}
+      className="grid  grid-cols-12 min-h-screen"
+    >
+      <div className="col-span-2 hidden xl:flex  ">
         <SideBar />
       </div>
 
-      <div className="col-span-4 xl:col-span-3 flex flex-col">
+      <div className="col-span-12 xl:col-span-10 flex flex-col">
         <Header />
 
         <div className="flex-grow  ">

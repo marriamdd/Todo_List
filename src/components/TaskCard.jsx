@@ -47,16 +47,16 @@ export default function TaskCard({ task, BGcolor }) {
   return (
     <div
       style={{ background: BGcolor || lightColorRef.current }}
-      className="relative shadow-md break-inside-avoid-column rounded-lg p-4 mb-4"
+      className="relative xl:max-w-[260px] shadow-md break-inside-avoid-column rounded-lg p-[10px] mb-4"
     >
       <div className="flex justify-between items-center">
-        <div className="bg-[#FDF8F2] w-auto h-12 rounded-full flex justify-center gap-2 items-center">
+        <div className="bg-[#FDF8F2]  w-auto h-[30px] px-[10px] rounded-full flex justify-center gap-2 items-center">
           <img
             className="w-6 h-6"
             src="/assets/task_icons/material-symbols-light_date-range-outline.svg"
             alt="date"
           />
-          <span className="text-lg font-normal text-textColor leading-6">
+          <span className="text-[14px] font-normal text-textColor leading-6">
             {formattedDate}
           </span>
         </div>
@@ -81,12 +81,12 @@ export default function TaskCard({ task, BGcolor }) {
           value={updatedDescription}
         ></textarea>
       ) : (
-        <p className="pt-4 text-textColor break-words text-lg font-normal leading-6">
+        <p className="pt-4 text-textColor break-words text-[14px] font-normal leading-6">
           {updatedDescription}
         </p>
       )}
 
-      <div className="flex justify-end pb-4">
+      <div className="flex justify-end pb-[10px]">
         <HoverMoreModal
           taskId={task.id}
           complate={task.complate}

@@ -17,9 +17,9 @@ function BurgerModal({ showBurgerModal, setShowBurgerModal }) {
           className="bg-[#000] xl:hidden fixed top-0 left-0 right-0 bottom-0 opacity-[0.5] z-10"
         ></div>
         <div
-          className={`fixed  transition-all xl:hidden  duration-[1s] ease  transform   z-10   shadow-[#364e7e1a] bg-[white]   py-[1rem] rounded-[0.8rem] bottom-0 top-0 ${
+          className={`fixed  transition-all xl:hidden  duration-[1s] ease  transform   z-10   shadow-[#364e7e1a] bg-[white]   py-[1rem] rounded-[8px] bottom-0 top-0 ${
             showBurgerModal ? "left-0  " : "left-[-30rem] "
-          }   rounded-none w-[30rem]`}
+          }   rounded-none w-[300px]`}
         >
           <div className="bg-[white] h-[100vh] h-100% flex flex-col">
             <SideBar

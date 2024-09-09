@@ -31,13 +31,13 @@ export default function MyDayPage() {
     }
     return data;
   };
-  // md:columns-2  xl:columns-4
+
   return (
     <div className="animate-fadeIn p-4">
       <AddTask addTask={addTask} setTasks={setTasks} />
       <div
         className="
-md:columns-2  xl:columns-4 gap-8
+md:columns-2  xl:columns-4 gap-[24px]
         
        "
       >

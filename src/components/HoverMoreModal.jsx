@@ -106,7 +106,7 @@ export function HoverMoreModal({ taskId, complate, important }) {
           className="cursor-pointer md:opacity-0 hover:opacity-[1]"
           src="/assets/task_icons/mingcute_more-2-line.svg"
           alt="more"
-          onClick={isMobile ? handleClick : undefined} // On mobile, trigger the click
+          onClick={isMobile ? handleClick : undefined}
         />
       </HoverCardTrigger>
       <HoverCardContent className="w-[188px] xl:w-[192px] rounded-[8px]">
@@ -114,7 +114,7 @@ export function HoverMoreModal({ taskId, complate, important }) {
           <div
             onClick={() => handleOptionClick(option.name)}
             key={index}
-            className={`flex cursor-pointer hover:bg-[#E7E8EA] w-full py-[1rem] px-[1.6rem] gap-[1.2rem] items-center
+            className={`flex cursor-pointer hover:bg-[#E7E8EA] w-full py-[10px] px-[16px] gap-[12px] items-center
               ${index >= 1 ? "border-b-[1px] border-b-[#E8E9EB]" : ""}`}
           >
             <img

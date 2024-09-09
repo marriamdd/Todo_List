@@ -18,7 +18,7 @@ export default function Language_selector() {
     <HoverCard className="px-0">
       <HoverCardTrigger asChild>
         <div className="xl:flex hidden gap-[0.4rem] items-center">
-          <span className="text-[1.4rem] font-[500]">{i18n.language}</span>
+          <span className="text-[14px] font-[500]">{i18n.language}</span>
           <img
             className="w-[22px] h-[22px]"
             src="/assets/header_icons/material-symbols-light_navigate-next.svg"

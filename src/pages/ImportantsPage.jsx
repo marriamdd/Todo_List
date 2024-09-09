@@ -49,7 +49,7 @@ const ImportantPage = () => {
   };
 
   return (
-    <div className="animate-fadeIn">
+    <div className="animate-fadeIn p-4">
       {!loading && tasks.length === 0 ? (
         <div className="flex items-center pt-[2rem] justify-center">
           <img src="/assets/empty/oc-empty-cart.svg" alt="No important tasks" />
@@ -58,9 +58,11 @@ const ImportantPage = () => {
         tasks.length > 0 && (
           <div>
             <AddTask addTask={addTask} setTasks={setTasks} />
-            {tasks.map((task) => (
-              <TaskCard BGcolor={"#E3EBFC"} key={task.id} task={task} />
-            ))}
+            <div className="md:columns-2  xl:columns-4 gap-[24px]">
+              {tasks.map((task) => (
+                <TaskCard BGcolor={"#E3EBFC"} key={task.id} task={task} />
+              ))}
+            </div>
           </div>
         )
       )}
